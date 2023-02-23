@@ -3,7 +3,7 @@ FROM ubuntu:latest
 USER root
 RUN apt-get update
 RUN apt-get install --no-install-recommends sudo apt-utils  -y
-RUN apt-get install --no-install-recommends python software-properties-common  -y
+RUN apt-get install --no-install-recommends software-properties-common  -y
 RUN apt-get install --no-install-recommends git curl xvfb  -y
 RUN apt-get install --no-install-recommends libglib2.0-0 libgtk-3-0 -y
 RUN apt-get install --no-install-recommends psmisc -y
