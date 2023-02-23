@@ -37,12 +37,6 @@ if [ $SUBLIME_TEXT_VERSION -ge 4 ] && [ "$SUBLIME_TEXT_ARCH" != "x64" ]; then
 fi
 
 if [ $SUBLIME_TEXT_VERSION -ge 4 ]; then
-    STWEB="https://www.sublimetext.com/download"
-else
-    STWEB="https://www.sublimetext.com/$SUBLIME_TEXT_VERSION"
-fi
-
-if [ $SUBLIME_TEXT_VERSION -ge 4 ]; then
     if [ $(uname) = 'Darwin' ]; then
         STP="$HOME/Library/Application Support/Sublime Text/Packages"
     else
@@ -55,6 +49,13 @@ else
         STP="$HOME/.config/sublime-text-$SUBLIME_TEXT_VERSION/Packages"
     fi
 fi
+
+if [ $SUBLIME_TEXT_VERSION -ge 4 ]; then
+    STWEB="https://www.sublimetext.com/download_thanks"
+else
+    STWEB="https://www.sublimetext.com/$SUBLIME_TEXT_VERSION"
+fi
+
 
 if [ $(uname) = 'Darwin'  ]; then
     if [ -z $(which subl) ]; then
@@ -74,7 +75,7 @@ if [ $(uname) = 'Darwin'  ]; then
         done
         if [ -z "$URL" ]; then
             echo "darwin"
-            echo "sbin/install_sublime_text.sh"
+            echo "scripts/install_sublime_text.sh"
             echo $URL
             echo "could not download Sublime Text binary"
             exit 1
@@ -135,9 +136,7 @@ else
         echo "installing sublime text $SUBLIME_TEXT_VERSION"
         for i in {1..20}; do
             if [ $SUBLIME_TEXT_VERSION -ge 4 ]; then
-                echo "STWEB"
-                echo $STWEB
-                URL="https://www.sublimetext.com/download_thanks?target=x64-pkg"
+                URL=$(curl -s "$STWEB" | sed -n 's/.*href="\([^"]*_x64\.tar\.xz\)".*/\1/p')
             else
                 if [ "$SUBLIME_TEXT_ARCH" = "x64" ]; then
                     URL=$(curl -s "$STWEB" | sed -n 's/.*href="\([^"]*x64\.tar\.bz2\)".*/\1/p')
@@ -148,7 +147,7 @@ else
             [ -n "$URL" ] && break || sleep 3
         done
         if [ -z "$URL" ]; then
-            echo "sbin/install_sublime_text.sh"
+            echo "scripts/install_sublime_text.sh"
             echo $URL
             echo "could not download Sublime Text binary"
             exit 1
