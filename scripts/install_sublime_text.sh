@@ -74,6 +74,9 @@ if [ $(uname) = 'Darwin'  ]; then
             [ -n "$URL" ] && break || sleep 3
         done
         if [ -z "$URL" ]; then
+            echo "darwin"
+            echo "scripts/install_sublime_text.sh"
+            echo $URL
             echo "could not download Sublime Text binary"
             exit 1
         fi
@@ -144,6 +147,8 @@ else
             [ -n "$URL" ] && break || sleep 3
         done
         if [ -z "$URL" ]; then
+            echo "scripts/install_sublime_text.sh"
+            echo $URL
             echo "could not download Sublime Text binary"
             exit 1
         fi
